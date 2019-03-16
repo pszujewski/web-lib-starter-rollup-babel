@@ -1,4 +1,6 @@
-const howLongTillLunch = require('..');
+import howLongTillLunch from '../dist';
+
+console.log(howLongTillLunch);
 
 describe("Testing jest", () => {
 	it("Should run", () => {
