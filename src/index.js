@@ -7,6 +7,6 @@ export default function howLongUntilLunch(hours, minutes) {
 	if (hours === undefined) hours = 12;
 	if (minutes === undefined) minutes = 30;
 
-	var millisecondsUntilLunchTime = millisecondsUntil(lunchtime(hours, minutes));
+	const millisecondsUntilLunchTime = millisecondsUntil(lunchtime(hours, minutes));
 	return ms(millisecondsUntilLunchTime, { long: true });
 }

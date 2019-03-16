@@ -1,11 +1,12 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
 export default [
 	// browser-friendly UMD build
 	{
-		input: 'src/main.js',
+		input: 'src/index.js',
 		output: {
 			name: 'howLongUntilLunch',
 			file: pkg.browser,
@@ -13,7 +14,10 @@ export default [
 		},
 		plugins: [
 			resolve(), // so Rollup can find `ms`
-			commonjs() // so Rollup can convert `ms` to an ES module
+			commonjs(), // so Rollup can convert `ms` to an ES module
+			babel({
+				exclude: 'node_modules/**' // only transpile our source code
+			}),
 		]
 	},
 
@@ -24,11 +28,14 @@ export default [
 	// an array for the `output` option, where we can specify 
 	// `file` and `format` for each target)
 	{
-		input: 'src/main.js',
+		input: 'src/index.js',
 		external: ['ms'],
-		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
-		]
+		output: { file: pkg.main, format: 'cjs' },
+		plugins: [
+			resolve(),
+			babel({
+				exclude: 'node_modules/**' // only transpile our source code
+			}),
+		],
 	}
 ];
